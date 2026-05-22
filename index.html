@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Содружество — Воркшоп 2026</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700&family=Golos+Text:wght@400;500;600&display=swap');
+
+  :root {
+    --bg: #0f0f0f;
+    --surface: #1a1a1a;
+    --surface2: #222222;
+    --border: rgba(255,255,255,0.08);
+    --text: #f0ede8;
+    --muted: #888;
+    --accent1: #e8a87c;   /* coral */
+    --accent2: #7bc4a8;   /* teal */
+    --accent3: #a89ee8;   /* purple */
+    --accent4: #e8d07b;   /* amber */
+    --accent5: #7baee8;   /* blue */
+    --ra: #a89ee8;
+    --sup: #7bc4a8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Golos Text', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(15,15,15,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 0;
+    padding: 0 24px;
+    height: 56px;
+  }
+  .nav-logo {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accent1);
+    letter-spacing: 0.05em;
+    margin-right: 32px;
+    white-space: nowrap;
+  }
+  .nav-tabs {
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .nav-tabs::-webkit-scrollbar { display: none; }
+  .nav-tab {
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--muted);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    border: none;
+    background: none;
+    font-family: 'Golos Text', sans-serif;
+  }
+  .nav-tab:hover { color: var(--text); background: var(--surface2); }
+  .nav-tab.active { color: var(--text); background: var(--surface2); }
+  .nav-tab[data-page="home"].active { color: var(--accent1); }
+  .nav-tab[data-page="t1"].active { color: var(--accent1); }
+  .nav-tab[data-page="t2"].active { color: var(--accent2); }
+  .nav-tab[data-page="t3"].active { color: var(--accent3); }
+  .nav-tab[data-page="t4"].active { color: var(--accent4); }
+  .nav-tab[data-page="t5"].active { color: var(--accent5); }
+
+  /* PAGES */
+  .page { display: none; max-width: 860px; margin: 0 auto; padding: 48px 24px 80px; }
+  .page.active { display: block; }
+
+  /* HOME PAGE */
+  .home-hero {
+    margin-bottom: 48px;
+  }
+  .home-hero h1 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+  .home-hero h1 span { color: var(--accent1); }
+  .home-hero p {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 560px;
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+  }
+  .meta-pill {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  .meta-pill b { color: var(--text); }
+
+  .section-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .rules-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 48px;
+  }
+  @media (max-width: 600px) { .rules-grid { grid-template-columns: 1fr; } }
+
+  .rule-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .rule-card .rule-num {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent1);
+    opacity: 0.3;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .rule-card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .rule-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  .tips-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 32px;
+  }
+  .tips-block h2 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: var(--text);
+  }
+  .tip-item {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tip-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .tip-icon {
+    font-size: 20px;
+    flex-shrink: 0;
+    width: 32px;
+    text-align: center;
+    margin-top: 1px;
+  }
+  .tip-text h4 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+  .tip-text p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  .timing-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+  .timing-block h2 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .timing-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    padding: 14px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .timing-row:last-child { border-bottom: none; }
+  .timing-time {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent1);
+    min-width: 72px;
+    padding-top: 2px;
+  }
+  .timing-text h4 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .timing-text p { font-size: 13px; color: var(--muted); }
+
+  .pitch-block {
+    background: linear-gradient(135deg, rgba(232,168,124,0.08), rgba(123,196,168,0.08));
+    border: 1px solid rgba(232,168,124,0.2);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 32px;
+  }
+  .pitch-block h2 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--accent1);
+    margin-bottom: 20px;
+  }
+  .pitch-step {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .pitch-step-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--accent1);
+    color: #000;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .pitch-step p { font-size: 14px; color: var(--text); line-height: 1.6; }
+  .pitch-step p span { color: var(--muted); font-size: 13px; }
+
+  /* TOPIC PAGES */
+  .topic-header {
+    margin-bottom: 40px;
+  }
+  .topic-num {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .topic-title {
+    font-family: 'Unbounded', sans-serif;
+    font-size: clamp(20px, 4vw, 30px);
+    font-weight: 700;
+    line-height: 1.25;
+    margin-bottom: 12px;
+  }
+  .topic-subtitle {
+    font-size: 15px;
+    color: var(--muted);
+    max-width: 580px;
+  }
+  .hook-box {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-style: italic;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+  }
+  .hook-box::before { content: '💬 '; font-style: normal; }
+
+  .data-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  @media (max-width: 600px) { .data-grid { grid-template-columns: 1fr; } }
+
+  .data-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .data-card-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .dot-ra { width: 8px; height: 8px; border-radius: 50%; background: var(--ra); display: inline-block; }
+  .dot-sup { width: 8px; height: 8px; border-radius: 50%; background: var(--sup); display: inline-block; }
+
+  .stat-item {
+    margin-bottom: 12px;
+  }
+  .stat-item:last-child { margin-bottom: 0; }
+  .stat-text { font-size: 13px; color: var(--text); margin-bottom: 4px; }
+  .stat-bar-row { display: flex; align-items: center; gap: 8px; }
+  .stat-bar-bg { flex: 1; background: var(--surface2); border-radius: 3px; height: 4px; }
+  .stat-bar-fill { height: 4px; border-radius: 3px; }
+  .fill-ra { background: var(--ra); }
+  .fill-sup { background: var(--sup); }
+  .stat-pct { font-size: 11px; color: var(--muted); min-width: 32px; }
+
+  .external-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 32px;
+  }
+  .external-block h3 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .ext-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .ext-item:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+  .ext-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+  .ext-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .ext-text b { color: var(--text); }
+
+  .tension-box {
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 32px;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .tension-box b { display: block; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+
+  .ai-block {
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 32px;
+  }
+  .ai-block h3 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  .ai-idea {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .ai-bullet {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+  .ai-idea-text h4 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
+  .ai-idea-text p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  .question-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 32px;
+  }
+  .question-block h3 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+  .question-item {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.6;
+  }
+  .q-arrow { color: var(--muted); flex-shrink: 0; font-size: 12px; margin-top: 4px; }
+
+  /* COLOR THEMES PER TOPIC */
+  .t1 .topic-num { color: var(--accent1); }
+  .t1 .tension-box { background: rgba(232,168,124,0.08); border: 1px solid rgba(232,168,124,0.2); }
+  .t1 .tension-box b { color: var(--accent1); }
+  .t1 .ai-block { background: rgba(232,168,124,0.06); border: 1px solid rgba(232,168,124,0.15); }
+  .t1 .ai-block h3 { color: var(--accent1); }
+  .t1 .ai-bullet { background: var(--accent1); }
+
+  .t2 .topic-num { color: var(--accent2); }
+  .t2 .tension-box { background: rgba(123,196,168,0.08); border: 1px solid rgba(123,196,168,0.2); }
+  .t2 .tension-box b { color: var(--accent2); }
+  .t2 .ai-block { background: rgba(123,196,168,0.06); border: 1px solid rgba(123,196,168,0.15); }
+  .t2 .ai-block h3 { color: var(--accent2); }
+  .t2 .ai-bullet { background: var(--accent2); }
+
+  .t3 .topic-num { color: var(--accent3); }
+  .t3 .tension-box { background: rgba(168,158,232,0.08); border: 1px solid rgba(168,158,232,0.2); }
+  .t3 .tension-box b { color: var(--accent3); }
+  .t3 .ai-block { background: rgba(168,158,232,0.06); border: 1px solid rgba(168,158,232,0.15); }
+  .t3 .ai-block h3 { color: var(--accent3); }
+  .t3 .ai-bullet { background: var(--accent3); }
+
+  .t4 .topic-num { color: var(--accent4); }
+  .t4 .tension-box { background: rgba(232,208,123,0.08); border: 1px solid rgba(232,208,123,0.2); }
+  .t4 .tension-box b { color: var(--accent4); }
+  .t4 .ai-block { background: rgba(232,208,123,0.06); border: 1px solid rgba(232,208,123,0.15); }
+  .t4 .ai-block h3 { color: var(--accent4); }
+  .t4 .ai-bullet { background: var(--accent4); }
+
+  .t5 .topic-num { color: var(--accent5); }
+  .t5 .tension-box { background: rgba(123,174,232,0.08); border: 1px solid rgba(123,174,232,0.2); }
+  .t5 .tension-box b { color: var(--accent5); }
+  .t5 .ai-block { background: rgba(123,174,232,0.06); border: 1px solid rgba(123,174,232,0.15); }
+  .t5 .ai-block h3 { color: var(--accent5); }
+  .t5 .ai-bullet { background: var(--accent5); }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">СОДРУЖЕСТВО '26</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" data-page="home" onclick="show('home', this)">Главная</button>
+    <button class="nav-tab" data-page="t1" onclick="show('t1', this)">① Совместные продажи</button>
+    <button class="nav-tab" data-page="t2" onclick="show('t2', this)">② Сервис и логистика</button>
+    <button class="nav-tab" data-page="t3" onclick="show('t3', this)">③ Экспертиза в продажи</button>
+    <button class="nav-tab" data-page="t4" onclick="show('t4', this)">④ Качество рынка</button>
+    <button class="nav-tab" data-page="t5" onclick="show('t5', this)">⑤ Новые форматы</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════ HOME ═══════════════════════════════ -->
+<div class="page active" id="page-home">
+
+  <div class="home-hero">
+    <h1>Воркшоп<br><span>Содружества</span><br>2026</h1>
+    <p>Материалы для модераторов и участников групп. Используйте вкладки вверху для навигации по темам.</p>
+  </div>
+
+  <div class="meta-row">
+    <div class="meta-pill"><b>30</b> участников</div>
+    <div class="meta-pill"><b>23</b> рекламных агентства</div>
+    <div class="meta-pill"><b>7</b> поставщиков</div>
+    <div class="meta-pill"><b>5</b> групп по 6 человек</div>
+    <div class="meta-pill"><b>~2.5</b> часа</div>
+  </div>
+
+  <div style="margin-bottom: 48px;">
+    <a href="https://docs.google.com/spreadsheets/d/1jshzP5d5ogCYpeGFgnYxmacJvioGiiMcDgJZyEjs8ko/edit?gid=0#gid=0" target="_blank" style="display: inline-flex; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 18px; text-decoration: none; color: var(--text); font-size: 14px; font-weight: 500; transition: border-color 0.2s;">
+      <span style="font-size: 18px;">📊</span>
+      <span>Данные опросов — Google Таблица</span>
+      <span style="font-size: 12px; color: var(--muted); margin-left: 4px;">↗</span>
+    </a>
+  </div>
+
+  <div class="section-title">Правила обсуждения в группе</div>
+  <div class="rules-grid">
+    <div class="rule-card">
+      <div class="rule-num">01</div>
+      <h3>Сначала пишем — потом говорим</h3>
+      <p>Первые 10 минут каждый молча записывает идеи в телефоне. Это нейтрализует давление сильных личностей и даёт голос каждому.</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">02</div>
+      <h3>Нет слова «нет»</h3>
+      <p>На этапе генерации любые идеи принимаются без оценки. Критику оставляем для этапа отбора. «Нет, но…» заменяем на «Да, и…»</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">03</div>
+      <h3>Говорим от себя</h3>
+      <p>«Я думаю», «в моей практике», «мы в агентстве» — не «рынок считает» или «все знают». Личный опыт ценнее обобщений.</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">04</div>
+      <h3>Один говорит — все слушают</h3>
+      <p>Никаких параллельных разговоров. Если хочется добавить — запишите в телефон, скажете в свою очередь.</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">05</div>
+      <h3>Идея должна быть реализуема</h3>
+      <p>Хорошая идея — та, которую можно запустить за 3–6 месяцев. Не «надо как-то договориться», а «делаем вот это вот так».</p>
+    </div>
+    <div class="rule-card">
+      <div class="rule-num">06</div>
+      <h3>Две идеи на выходе</h3>
+      <p>Группа выбирает <b>главную</b> идею для питча и <b>запасную</b> — на случай вопросов или если главная уже прозвучала от другой группы.</p>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:48px;">Механика работы в группе — 75 минут</div>
+
+  <div class="timing-block" style="margin-bottom:32px;">
+    <h2>7 шагов за 75 минут</h2>
+    <div class="timing-row">
+      <div class="timing-time">3 мин</div>
+      <div class="timing-text">
+        <h4>Шаг 1 — Открытие темы</h4>
+        <p>Модератор открывает на ноутбуке вкладку своей темы. Группа вместе читает данные опроса и главное противоречие. Модератор зачитывает крючок-вопрос вслух.</p>
+      </div>
+    </div>
+    <div class="timing-row">
+      <div class="timing-time">10 мин</div>
+      <div class="timing-text">
+        <h4>Шаг 2 — Тихая генерация в телефонах</h4>
+        <p>Каждый открывает заметки в телефоне и молча пишет свои идеи — минимум 2–3, без ограничений сверху. Никто не говорит, не советуется, не смотрит в чужой экран. Модератор следит за временем и не даёт начать разговор раньше. Это важный этап — не сокращать.</p>
+      </div>
+    </div>
+    <div class="timing-row">
+      <div class="timing-time">20 мин</div>
+      <div class="timing-text">
+        <h4>Шаг 3 — Круг голосов + фиксация на ноутбуке</h4>
+        <p>По очереди каждый зачитывает свои идеи — коротко, без защиты и объяснений. Один человек в группе открывает на ноутбуке Google Документ (ссылка подготовлена организатором заранее) и печатает каждую идею одной строкой. Правило: во время круга не обсуждаем и не комментируем. Если кто-то уже озвучил вашу идею — просто говорите «+1» и добавляйте, если есть что-то новое.</p>
+      </div>
+    </div>
+    <div class="timing-row">
+      <div class="timing-time">5 мин</div>
+      <div class="timing-text">
+        <h4>Шаг 4 — Первый фильтр</h4>
+        <p>Все идеи видны в документе. Каждый называет 3 идеи из списка, которые считает сильнейшими. Модератор ставит плюсы в документе. Идеи с 2+ голосами остаются в «коротком списке» — обычно это 5–8 позиций. Сайт на ноутбуке можно закрыть — теперь работаем только с документом.</p>
+      </div>
+    </div>
+    <div class="timing-row">
+      <div class="timing-time">25 мин</div>
+      <div class="timing-text">
+        <h4>Шаг 5 — Обсуждение короткого списка</h4>
+        <p>Работают только с отобранными идеями. Группа обсуждает: какие можно объединить, какую хочется развить глубже. Модератор задаёт вопросы вглубь: «Как именно это работало бы?», «Кто это запускает?», «Что нужно для старта за 3 месяца?»</p>
+      </div>
+    </div>
+    <div class="timing-row">
+      <div class="timing-time">5 мин</div>
+      <div class="timing-text">
+        <h4>Шаг 6 — Выбор двух идей</h4>
+        <p>Финальное голосование голосом: каждый называет одну идею, за которую голосует. Модератор считает в документе. Идея с наибольшим числом голосов — <b>главная</b>. Вторая по голосам — <b>запасная</b>. Обе фиксируются в документе.</p>
+      </div>
+    </div>
+    <div class="timing-row">
+      <div class="timing-time">7 мин</div>
+      <div class="timing-text">
+        <h4>Шаг 7 — Подготовка питча</h4>
+        <p>Группа устно договаривается: кто выступает, как формулирует главную идею, какой следующий шаг предлагает. Запасная идея остаётся в документе — спикер упоминает её коротко в конце питча.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="tips-block">
+    <h2>Советы модератору группы</h2>
+    <div class="tip-item">
+      <div class="tip-icon">⏱</div>
+      <div class="tip-text">
+        <h4>Следите за временем жёстко</h4>
+        <p>Установите таймер на телефоне на каждый шаг. Самые опасные моменты — шаг 3 (круг голосов затягивается, если идей много) и шаг 5 (обсуждение уходит в детали). При необходимости — прерывайте вежливо, но твёрдо.</p>
+      </div>
+    </div>
+    <div class="tip-item">
+      <div class="tip-icon">💻</div>
+      <div class="tip-text">
+        <h4>Ноутбук — инструмент группы, не личный</h4>
+        <p>На шаге 1 ноутбук показывает сайт с темой. На шаге 3 переключается на Google Документ. Выберите «секретаря» заранее — человека, который будет печатать идеи. Лучше если это не модератор, чтобы он мог следить за процессом.</p>
+      </div>
+    </div>
+    <div class="tip-item">
+      <div class="tip-icon">📱</div>
+      <div class="tip-text">
+        <h4>Телефоны — только для заметок на шаге 2</h4>
+        <p>После окончания тихой генерации попросите убрать телефоны. Когда все идеи зафиксированы в документе на ноутбуке — телефоны больше не нужны до финального голосования на Mentimeter.</p>
+      </div>
+    </div>
+    <div class="tip-item">
+      <div class="tip-icon">🎯</div>
+      <div class="tip-text">
+        <h4>Возвращайте к теме</h4>
+        <p>Если разговор уходит в жалобы — задайте вопрос: «Хорошо, и что конкретно мы можем предложить сделать?» Держите фокус на действии, а не на диагнозе проблемы.</p>
+      </div>
+    </div>
+    <div class="tip-item">
+      <div class="tip-icon">🔇</div>
+      <div class="tip-text">
+        <h4>Гасите доминирование</h4>
+        <p>Если кто-то говорит больше всех — используйте фразу: «Спасибо, давайте послушаем тех, кто ещё не высказался». Обратитесь к тихим напрямую по имени.</p>
+      </div>
+    </div>
+    <div class="tip-item">
+      <div class="tip-icon">🏗</div>
+      <div class="tip-text">
+        <h4>Углубляйте идеи</h4>
+        <p>Когда звучит интересная мысль — не отпускайте её. Спросите: «Как именно это работало бы?», «Кто это запускает?», «Что нужно, чтобы это случилось за 3 месяца?»</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-title">Тайминг всего воркшопа</div>
+  <div class="timing-block" style="margin-bottom:32px;">
+    <h2>Программа дня</h2>
+    <div class="timing-row">
+      <div class="timing-time">10 мин</div>
+      <div class="timing-text">
+        <h4>Открытие</h4>
+        <p>Ведущий показывает 3–4 главных разрыва из опросов. Объясняет механику и правила. Объявляет темы и состав групп.</p>
+      </div>
+    </div>
+    <div class="timing-row">
+      <div class="timing-time">75 мин</div>
+      <div class="timing-text">
+        <h4>Работа в группах — 7 шагов</h4>
+        <p>Каждая группа работает по своей теме по механике выше. Все 5 групп работают параллельно.</p>
+      </div>
+    </div>
+    <div class="timing-row">
+      <div class="timing-time">25 мин</div>
+      <div class="timing-text">
+        <h4>Питчинг — 5 групп × 5 минут</h4>
+        <p>Каждая группа презентует главную идею. Строго по времени. Вопросы и обсуждение — после всех питчей.</p>
+      </div>
+    </div>
+    <div class="timing-row">
+      <div class="timing-time">10 мин</div>
+      <div class="timing-text">
+        <h4>Вопросы залу</h4>
+        <p>Короткое обсуждение после всех питчей. Уточнения, комментарии. Не дебаты — просто вопросы спикерам.</p>
+      </div>
+    </div>
+    <div class="timing-row">
+      <div class="timing-time">5 мин</div>
+      <div class="timing-text">
+        <h4>Голосование в Mentimeter</h4>
+        <p>Ведущий вводит 5 идей в Mentimeter прямо в моменте. Показывает QR-код на экране. Все голосуют с телефона — 60 секунд. Результаты появляются на экране в реальном времени.</p>
+      </div>
+    </div>
+    <div class="timing-row">
+      <div class="timing-time">5 мин</div>
+      <div class="timing-text">
+        <h4>Итог и следующие шаги</h4>
+        <p>Ведущий объявляет победившую идею. По топ-3 идеям — записываются ответственные прямо в зале. Все документы групп сохраняются в общей папке.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pitch-block">
+    <h2>Как сделать сильный питч от группы</h2>
+    <div class="pitch-step">
+      <div class="pitch-step-num">1</div>
+      <p><strong>Назовите проблему в одном предложении</strong><br><span>Не «мы обсуждали тему сервиса», а «агентства теряют клиентов из-за того, что поставщик доставляет 7 дней вместо 3».</span></p>
+    </div>
+    <div class="pitch-step">
+      <div class="pitch-step-num">2</div>
+      <p><strong>Назовите главную идею — коротко и конкретно</strong><br><span>«Мы предлагаем запустить пилот: 3 поставщика гарантируют доставку за 3 дня по 5 городам, агентства дают им приоритет в рекомендациях КЗ».</span></p>
+    </div>
+    <div class="pitch-step">
+      <div class="pitch-step-num">3</div>
+      <p><strong>Скажите, кто это запускает</strong><br><span>Идея без владельца — мечта. Назовите, кто берёт ответственность за первый шаг. Можно прямо в зале.</span></p>
+    </div>
+    <div class="pitch-step">
+      <div class="pitch-step-num">4</div>
+      <p><strong>Один конкретный следующий шаг</strong><br><span>«До 1 июля собираем рабочую группу из 3 агентств и 2 поставщиков». Не «надо поработать над этим».</span></p>
+    </div>
+    <div class="pitch-step">
+      <div class="pitch-step-num">5</div>
+      <p><strong>Упомяните запасную идею в одной фразе</strong><br><span>«У нас также была сильная идея про единый SLA на брак — если интересно, готовы рассказать подробнее». Это даёт залу выбор и показывает глубину работы группы.</span></p>
+    </div>
+    <div class="pitch-step">
+      <div class="pitch-step-num">6</div>
+      <p><strong>Не читайте — говорите</strong><br><span>5 минут — это 3–4 абзаца текста. Лучше рассказать живо и коротко, чем зачитать по бумажке всё, что обсуждали.</span></p>
+    </div>
+  </div>
+
+
+</div>
+
+<!-- ═══════════════════════════════ TOPIC 1 ═══════════════════════════════ -->
+<div class="page t1" id="page-t1">
+  <div class="topic-header">
+    <div class="topic-num">Тема 01 · Группа 1</div>
+    <div class="topic-title">Как агентство и поставщик вместе выигрывают крупный проект?</div>
+    <div class="topic-subtitle">Тендеры, шоу-румы, совместные ивенты, защита сделки — как выстроить механику, при которой 1+1 = 3.</div>
+    <div class="hook-box">«Вспомни проект, который мог бы быть в два раза больше — что помешало?»</div>
+  </div>
+
+  <div class="section-title">Данные опроса</div>
+  <div class="data-grid">
+    <div class="data-card">
+      <div class="data-card-label"><span class="dot-ra"></span> Агентства говорят</div>
+      <div class="stat-item">
+        <div class="stat-text">Нужна поддержка в тендерах — цена, резерв, постоплата</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-ra" style="width:72%"></div></div><div class="stat-pct">72%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Образцы и спикеры для мероприятий с конечным клиентом</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-ra" style="width:67%"></div></div><div class="stat-pct">67%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Фиксация клиента / защита от пересечений с поставщиком</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-ra" style="width:56%"></div></div><div class="stat-pct">56%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Шоу-рум поставщика для визитов конечного клиента</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-ra" style="width:44%"></div></div><div class="stat-pct">44%</div></div>
+      </div>
+    </div>
+    <div class="data-card">
+      <div class="data-card-label"><span class="dot-sup"></span> Поставщики говорят</div>
+      <div class="stat-item">
+        <div class="stat-text">Помогаем в тендерах и совместных переговорах с КЗ</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-sup" style="width:58%"></div></div><div class="stat-pct">58%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Нужна открытость агентств по проектам — узнаём слишком поздно</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-sup" style="width:50%"></div></div><div class="stat-pct">50%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Менеджеры РА боятся предлагать альтернативу конечному клиенту</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-sup" style="width:42%"></div></div><div class="stat-pct">42%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Готовы к эксклюзиву при подтверждённых оборотах</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-sup" style="width:33%"></div></div><div class="stat-pct">33%</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tension-box">
+    <b>Главное противоречие</b>
+    Оба хотят работать с конечным клиентом вместе, но механики нет. Поставщики узнают о проектах в последний момент. Агентства боятся «пустить» поставщика к клиенту. Доверие есть не везде — а без него совместные продажи не запускаются.
+  </div>
+
+  <div class="external-block">
+    <h3>Данные из открытых источников</h3>
+    <div class="ext-item">
+      <div class="ext-icon">📊</div>
+      <div class="ext-text"><b>Co-selling увеличивает конверсию на 30–50%</b> по данным исследований B2B-партнёрств: компании, которые продают совместно с партнёрами, закрывают сделки быстрее и с более высоким чеком, чем работая в одиночку.</div>
+    </div>
+    <div class="ext-item">
+      <div class="ext-icon">🏆</div>
+      <div class="ext-text"><b>Ключевое условие успешного co-selling</b> — раннее включение: партнёр должен быть вовлечён на этапе квалификации сделки, а не в момент подготовки КП. Позднее включение снижает шансы выигрыша на 40%.</div>
+    </div>
+    <div class="ext-item">
+      <div class="ext-icon">🎯</div>
+      <div class="ext-text"><b>Частные тендеры в B2B</b> не публикуются открыто — заказчики приглашают знакомых подрядчиков. Это означает, что доступ к тендеру часто зависит от личных отношений, а не от цены или качества продукта.</div>
+    </div>
+    <div class="ext-item">
+      <div class="ext-icon">🌐</div>
+      <div class="ext-text"><b>Рынок мерча и бизнес-подарков в России</b> оценивается в 80–90 млрд рублей. При восстановлении экономической активности прогнозируется рост до 100–120 млрд к 2026 году (Portobello / Sostav).</div>
+    </div>
+  </div>
+
+  <div class="ai-block">
+    <h3>💡 Идеи для генерации — куда смотреть</h3>
+    <div class="ai-idea">
+      <div class="ai-bullet"></div>
+      <div class="ai-idea-text">
+        <h4>Протокол раннего включения</h4>
+        <p>Агентство обязуется информировать «своего» поставщика о проекте на стадии брифа, а не КП. Взамен — приоритет в ценообразовании и резерве товара. Можно ли стандартизировать это в рамках Содружества?</p>
+      </div>
+    </div>
+    <div class="ai-idea">
+      <div class="ai-bullet"></div>
+      <div class="ai-idea-text">
+        <h4>Совместный клиентский день</h4>
+        <p>Регулярное мероприятие (1–2 раза в год), куда агентства приглашают своих КЗ, а поставщики обеспечивают экспертизу, шоу-рум и образцы. Не выставка — а закрытый формат для конкретных клиентов.</p>
+      </div>
+    </div>
+    <div class="ai-idea">
+      <div class="ai-bullet"></div>
+      <div class="ai-idea-text">
+        <h4>Реестр тендерной поддержки</h4>
+        <p>Каждый поставщик публикует, какую поддержку он готов дать в тендере: спеццена, резерв без снятия, участие в защите. Агентство выбирает партнёра под конкретный тендер осознанно, а не по привычке.</p>
+      </div>
+    </div>
+    <div class="ai-idea">
+      <div class="ai-bullet"></div>
+      <div class="ai-idea-text">
+        <h4>Модель фиксации клиента</h4>
+        <p>Прозрачные правила: если агентство привело клиента к поставщику — он «закреплён» на X месяцев. Что это даёт агентству? Что — поставщику? Как избежать конфликтов?</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <h3>Вопросы для обсуждения в группе</h3>
+    <div class="question-item"><div class="q-arrow">→</div><div>Как выглядит идеальный сценарий совместной работы на крупном проекте от брифа до закрытия сделки?</div></div>
+    <div class="question-item"><div class="q-arrow">→</div><div>Что мешает агентству раньше подключать поставщика? Что мешает поставщику быть полезным раньше?</div></div>
+    <div class="question-item"><div class="q-arrow">→</div><div>Как должна выглядеть «честная» фиксация клиента, чтобы обе стороны считали её справедливой?</div></div>
+    <div class="question-item"><div class="q-arrow">→</div><div>Какой один совместный формат (ивент, инструмент, протокол) мы могли бы запустить за 3 месяца?</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ TOPIC 2 ═══════════════════════════════ -->
+<div class="page t2" id="page-t2">
+  <div class="topic-header">
+    <div class="topic-num">Тема 02 · Группа 2</div>
+    <div class="topic-title">За что агентства реально выбирают поставщика — и готовы платить?</div>
+    <div class="topic-subtitle">Скорость, логистика, брак, минималки, доставка КЗ — что создаёт лояльность, а что просто гигиена.</div>
+    <div class="hook-box">«К кому ты идёшь в первую очередь — и почему именно к нему?»</div>
+  </div>
+
+  <div class="section-title">Данные опроса</div>
+  <div class="data-grid">
+    <div class="data-card">
+      <div class="data-card-label"><span class="dot-ra"></span> Агентства говорят</div>
+      <div class="stat-item">
+        <div class="stat-text">Доставка максимум 3 дня по всей России</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-ra" style="width:72%"></div></div><div class="stat-pct">72%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Бесплатная доставка от любой суммы заказа</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-ra" style="width:61%"></div></div><div class="stat-pct">61%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Замена брака силами и за счёт поставщика</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-ra" style="width:56%"></div></div><div class="stat-pct">56%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Drop-shipping напрямую конечному клиенту без лейбла поставщика</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-ra" style="width:39%"></div></div><div class="stat-pct">39%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Минимальная сумма заказа тормозит сборные заказы</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-ra" style="width:33%"></div></div><div class="stat-pct">33%</div></div>
+      </div>
+    </div>
+    <div class="data-card">
+      <div class="data-card-label"><span class="dot-sup"></span> Поставщики говорят</div>
+      <div class="stat-item">
+        <div class="stat-text">Развиваем хранение и логистику, склады растут</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-sup" style="width:58%"></div></div><div class="stat-pct">58%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Кастомизация и упаковка — готовы развивать</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-sup" style="width:50%"></div></div><div class="stat-pct">50%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Брак обрабатываем быстро (98% претензий за 1–2 часа)</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-sup" style="width:33%"></div></div><div class="stat-pct">33%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Экспресс-доставка из Китая — в развитии</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-sup" style="width:25%"></div></div><div class="stat-pct">25%</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tension-box">
+    <b>Главное противоречие</b>
+    Агентства хотят, чтобы поставщик взял «последнюю милю» — доставил напрямую конечному клиенту, заменил брак без лишних движений, убрал пороги по минималке. Поставщики инвестируют в склады и кастомизацию, но о бесплатной доставке и drop-shipping молчат.
+  </div>
+
+  <div class="external-block">
+    <h3>Данные из открытых источников</h3>
+    <div class="ext-item">
+      <div class="ext-icon">🚀</div>
+      <div class="ext-text"><b>B2B-маркетплейсы активно внедряют сервисы «последней мили»:</b> бесплатную доставку, электронный документооборот и резервирование товаров — именно эти функции называются ключевыми факторами выбора поставщика в сегменте (Яндекс Маркет B2B, 2025).</div>
+    </div>
+    <div class="ext-item">
+      <div class="ext-icon">📦</div>
+      <div class="ext-text"><b>Drop-shipping в B2B растёт:</b> модель, при которой поставщик отправляет товар напрямую конечному покупателю агентства, сокращает логистические издержки агентства на 15–25% и ускоряет цикл сделки.</div>
+    </div>
+    <div class="ext-item">
+      <div class="ext-icon">⏱</div>
+      <div class="ext-text"><b>Скорость доставки стала главным KPI:</b> по данным Data Insight, ожидания по срокам доставки в B2B сократились с 5–7 дней (2022) до 2–3 дней (2025). Рынок подтянули маркетплейсы с экспресс-доставкой.</div>
+    </div>
+    <div class="ext-item">
+      <div class="ext-icon">🔄</div>
+      <div class="ext-text"><b>Обработка рекламаций — конкурентное преимущество:</b> в B2B лояльность клиента после качественно решённой проблемы выше, чем у клиента, у которого проблем не было. Скорость реакции на брак важнее факта брака.</div>
+    </div>
+  </div>
+
+  <div class="ai-block">
+    <h3>💡 Идеи для генерации — куда смотреть</h3>
+    <div class="ai-idea">
+      <div class="ai-bullet"></div>
+      <div class="ai-idea-text">
+        <h4>Сервисный стандарт Содружества</h4>
+        <p>Набор минимальных требований, которым должны соответствовать поставщики-члены сообщества: срок доставки, срок обработки рекламации, наличие опции drop-shipping. Агентства выбирают из «сертифицированных».</p>
+      </div>
+    </div>
+    <div class="ai-idea">
+      <div class="ai-bullet"></div>
+      <div class="ai-idea-text">
+        <h4>Пул экспресс-доставки</h4>
+        <p>Несколько поставщиков объединяются для обеспечения доставки в 3 дня по ключевым городам. Агентство получает гарантию срока от «пула», а не от конкретного поставщика. Снижает риск срыва.</p>
+      </div>
+    </div>
+    <div class="ai-idea">
+      <div class="ai-bullet"></div>
+      <div class="ai-idea-text">
+        <h4>Прозрачный SLA на брак</h4>
+        <p>Единый понятный протокол: что считается браком, в какой срок решается, кто платит за замену и пересылку. Сейчас у каждого поставщика свои правила — агентство не знает, чего ожидать.</p>
+      </div>
+    </div>
+    <div class="ai-idea">
+      <div class="ai-bullet"></div>
+      <div class="ai-idea-text">
+        <h4>«Белый лейбл» отгрузки</h4>
+        <p>Поставщик отправляет товар конечному клиенту в упаковке агентства — без своего логотипа и реквизитов. Стандартизировать эту опцию для всех членов Содружества как базовую.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <h3>Вопросы для обсуждения в группе</h3>
+    <div class="question-item"><div class="q-arrow">→</div><div>Что из сервиса поставщика для вас является «гигиеной» (минимум), а что — реальным конкурентным преимуществом?</div></div>
+    <div class="question-item"><div class="q-arrow">→</div><div>Кто должен платить за бесплатную доставку — и как поставщик может это себе позволить?</div></div>
+    <div class="question-item"><div class="q-arrow">→</div><div>Как должен выглядеть идеальный процесс обработки брака — от обнаружения до замены?</div></div>
+    <div class="question-item"><div class="q-arrow">→</div><div>Какой один сервисный стандарт, если его примут все поставщики Содружества, изменит рынок?</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ TOPIC 3 ═══════════════════════════════ -->
+<div class="page t3" id="page-t3">
+  <div class="topic-header">
+    <div class="topic-num">Тема 03 · Группа 3</div>
+    <div class="topic-title">Как поднять экспертизу менеджеров и превратить её в продажи?</div>
+    <div class="topic-subtitle">Форматы, кейсы, ролевки, семплы — как выстроить систему, при которой знание продукта конвертируется в деньги.</div>
+    <div class="hook-box">«Когда ты последний раз выиграл проект именно потому, что знал продукт лучше конкурента?»</div>
+  </div>
+
+  <div class="section-title">Данные опроса</div>
+  <div class="data-grid">
+    <div class="data-card">
+      <div class="data-card-label"><span class="dot-ra"></span> Агентства говорят</div>
+      <div class="stat-item">
+        <div class="stat-text">Офлайн, не дольше 1 часа, новинки и технологии нанесения</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-ra" style="width:78%"></div></div><div class="stat-pct">78%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Нужны образцы, семплы, образцы технологий печати</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-ra" style="width:72%"></div></div><div class="stat-pct">72%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Разбор реальных кейсов и ролевые практики с клиентом</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-ra" style="width:50%"></div></div><div class="stat-pct">50%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">«Пустые» презентации без практики раздражают</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-ra" style="width:44%"></div></div><div class="stat-pct">44%</div></div>
+      </div>
+    </div>
+    <div class="data-card">
+      <div class="data-card-label"><span class="dot-sup"></span> Поставщики говорят</div>
+      <div class="stat-item">
+        <div class="stat-text">Вкладываем в обучение — явка и инициатива менеджеров низкие</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-sup" style="width:58%"></div></div><div class="stat-pct">58%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Нужна поддержка руководителей РА, не только менеджеров</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-sup" style="width:42%"></div></div><div class="stat-pct">42%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Даём материалы, one-pager, фото — планируем развивать</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-sup" style="width:42%"></div></div><div class="stat-pct">42%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Встречи по продукту и технологиям — проводим регулярно</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-sup" style="width:33%"></div></div><div class="stat-pct">33%</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tension-box">
+    <b>Главное противоречие</b>
+    Поставщики делают обучение — менеджеры не приходят. Агентства хотят практику и кейсы, а получают продуктовые презентации. Ни одна сторона не признаёт, что формат устарел — но обе недовольны результатом.
+  </div>
+
+  <div class="external-block">
+    <h3>Данные из открытых источников</h3>
+    <div class="ext-item">
+      <div class="ext-icon">📚</div>
+      <div class="ext-text"><b>«Человеческая экспертиза снова в цене»</b> — Forrester 2026. После волны ИИ-контента клиенты всё острее ощущают дефицит живого, честного экспертного мнения. Менеджер, который умеет объяснить продукт — редкость и конкурентное преимущество.</div>
+    </div>
+    <div class="ext-item">
+      <div class="ext-icon">🎭</div>
+      <div class="ext-text"><b>Ролевые практики повышают усвоение в 3–4 раза</b> по сравнению с пассивным прослушиванием. Навык продаж формируется только в действии — разбор кейса без проигрывания даёт минимальный результат.</div>
+    </div>
+    <div class="ext-item">
+      <div class="ext-icon">🤝</div>
+      <div class="ext-text"><b>Вовлечение руководителей критично:</b> если РОП не участвует в обучении — менеджеры не применяют знания на практике. Поддержка сверху увеличивает применение новых навыков с 20% до 65%.</div>
+    </div>
+    <div class="ext-item">
+      <div class="ext-icon">📱</div>
+      <div class="ext-text"><b>Микрообучение (до 15 минут) эффективнее долгих сессий</b> для операционных сотрудников: короткий разбор одного кейса раз в 2 недели даёт лучший результат, чем квартальная трёхчасовая презентация.</div>
+    </div>
+  </div>
+
+  <div class="ai-block">
+    <h3>💡 Идеи для генерации — куда смотреть</h3>
+    <div class="ai-idea">
+      <div class="ai-bullet"></div>
+      <div class="ai-idea-text">
+        <h4>Формат «Кейс месяца»</h4>
+        <p>Раз в месяц агентство и поставщик вместе разбирают один реальный кейс: что был за проект, как принималось решение по продукту, что сработало. 30 минут офлайн или короткое видео. Не реклама — честный разбор.</p>
+      </div>
+    </div>
+    <div class="ai-idea">
+      <div class="ai-bullet"></div>
+      <div class="ai-idea-text">
+        <h4>Ротация менеджеров</h4>
+        <p>Менеджер агентства проводит 1 день на производстве или складе поставщика. Менеджер поставщика — 1 день на встречах с клиентами агентства. Взаимное погружение без презентаций.</p>
+      </div>
+    </div>
+    <div class="ai-idea">
+      <div class="ai-bullet"></div>
+      <div class="ai-idea-text">
+        <h4>Библиотека аргументов</h4>
+        <p>Совместный документ: «Как ответить на возражение клиента — почему это дорого / долго / не уникально». Поставщик даёт факты о продукте, агентство — реальные формулировки из переговоров. Живой инструмент для менеджеров.</p>
+      </div>
+    </div>
+    <div class="ai-idea">
+      <div class="ai-bullet"></div>
+      <div class="ai-idea-text">
+        <h4>Образцы как инструмент продажи</h4>
+        <p>Система ротации семплов: поставщик передаёт агентству набор образцов на 2 месяца, потом меняет на новые. Агентство фиксирует, какие образцы «продали» — это обратная связь поставщику о реальном спросе.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <h3>Вопросы для обсуждения в группе</h3>
+    <div class="question-item"><div class="q-arrow">→</div><div>Почему менеджеры не ходят на обучение? Что нужно изменить, чтобы они сами хотели прийти?</div></div>
+    <div class="question-item"><div class="q-arrow">→</div><div>Какой формат передачи знаний реально работает в вашей практике — и почему?</div></div>
+    <div class="question-item"><div class="q-arrow">→</div><div>Как измерить, что обучение дало результат в продажах — через какой срок и по каким метрикам?</div></div>
+    <div class="question-item"><div class="q-arrow">→</div><div>Какой один совместный формат обучения мы могли бы запустить силами Содружества — без больших бюджетов?</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ TOPIC 4 ═══════════════════════════════ -->
+<div class="page t4" id="page-t4">
+  <div class="topic-header">
+    <div class="topic-num">Тема 04 · Группа 4</div>
+    <div class="topic-title">Как сообщество может поднять планку качества и не дать рынку деградировать?</div>
+    <div class="topic-subtitle">Стандарты, репутация, совместная позиция — что может сделать Содружество, чего не может сделать одна компания.</div>
+    <div class="hook-box">«Что должно измениться, чтобы клиент перестал сравнивать вас с маркетплейсом?»</div>
+  </div>
+
+  <div class="section-title">Данные опроса</div>
+  <div class="data-grid">
+    <div class="data-card">
+      <div class="data-card-label"><span class="dot-ra"></span> Агентства говорят</div>
+      <div class="stat-item">
+        <div class="stat-text">КЗ сравнивает цены с маркетплейсами — это убивает маржу</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-ra" style="width:72%"></div></div><div class="stat-pct">72%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Демпинг коллег по рынку — главная внешняя угроза</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-ra" style="width:67%"></div></div><div class="stat-pct">67%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Поставщики не должны продавать на маркетплейсах по низким ценам</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-ra" style="width:44%"></div></div><div class="stat-pct">44%</div></div>
+      </div>
+    </div>
+    <div class="data-card">
+      <div class="data-card-label"><span class="dot-sup"></span> Поставщики говорят</div>
+      <div class="stat-item">
+        <div class="stat-text">Демпинг мелких игроков — главный барьер для роста</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-sup" style="width:58%"></div></div><div class="stat-pct">58%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Конкуренция с производителями низкого качества по цене</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-sup" style="width:42%"></div></div><div class="stat-pct">42%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Агентства не считают экономику в разрезе поставщиков</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-sup" style="width:33%"></div></div><div class="stat-pct">33%</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tension-box">
+    <b>Уникальность этой темы</b>
+    Это единственная тема, где обе стороны страдают одинаково и находятся по одну сторону. Демпинг разрушает рынок для всех. Это потенциальная точка объединения и запуска совместной инициативы — то, что одна компания сделать не может, но сообщество может.
+  </div>
+
+  <div class="external-block">
+    <h3>Данные из открытых источников</h3>
+    <div class="ext-item">
+      <div class="ext-icon">⚠️</div>
+      <div class="ext-text"><b>Демпинговая скидка 15–25%</b> требует роста продаж на 30–40%, чтобы сохранить прибыль — большинство компаний этого не достигает. Ценовая война приводит к убыткам даже у её инициатора (Simon-Kucher & Partners).</div>
+    </div>
+    <div class="ext-item">
+      <div class="ext-icon">🛡</div>
+      <div class="ext-text"><b>Лучшая защита от демпинга</b> — сделать цену не единственным критерием выбора. Сервис, скорость, экспертиза, доверие и репутация создают «стену», через которую демпинг не проходит.</div>
+    </div>
+    <div class="ext-item">
+      <div class="ext-icon">📋</div>
+      <div class="ext-text"><b>РРЦ (рекомендованная розничная цена) работает юридически</b> — прозрачная ценовая политика, прописанная в договоре, является законным инструментом защиты. Поставщики могут использовать её в B2B-документах.</div>
+    </div>
+    <div class="ext-item">
+      <div class="ext-icon">🤝</div>
+      <div class="ext-text"><b>Отраслевые ассоциации успешно борются с демпингом</b> через стандарты качества: когда рынок принимает минимальные требования к продукту, демпинговать некачественным товаром становится сложнее.</div>
+    </div>
+  </div>
+
+  <div class="ai-block">
+    <h3>💡 Идеи для генерации — куда смотреть</h3>
+    <div class="ai-idea">
+      <div class="ai-bullet"></div>
+      <div class="ai-idea-text">
+        <h4>«Знак качества» Содружества</h4>
+        <p>Сертификация поставщиков по набору критериев: сроки, сервис, работа с браком, прозрачность. Агентства рекомендуют клиентам работать с «сертифицированными» — это создаёт барьер для демпингующих новичков.</p>
+      </div>
+    </div>
+    <div class="ai-idea">
+      <div class="ai-bullet"></div>
+      <div class="ai-idea-text">
+        <h4>Открытая база «не рекомендуем»</h4>
+        <p>Закрытый для членов Содружества список компаний, которые демпингуют и подводят рынок. Не публичный чёрный список — но внутренний сигнал для своих. Репутационный механизм.</p>
+      </div>
+    </div>
+    <div class="ai-idea">
+      <div class="ai-bullet"></div>
+      <div class="ai-idea-text">
+        <h4>Единая методичка «Как объяснить клиенту разницу в цене»</h4>
+        <p>Совместный инструмент для менеджеров: как донести до КЗ, почему качественный мерч от проверенного поставщика дороже «того же» с маркетплейса. Аргументы, кейсы, цифры.</p>
+      </div>
+    </div>
+    <div class="ai-idea">
+      <div class="ai-bullet"></div>
+      <div class="ai-idea-text">
+        <h4>Публичная позиция Содружества</h4>
+        <p>Манифест или открытое письмо рынку: что такое честная конкуренция, какие практики разрушают отрасль. Не обвинения — принципы. Влияет на новых игроков и на восприятие рынка клиентами.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <h3>Вопросы для обсуждения в группе</h3>
+    <div class="question-item"><div class="q-arrow">→</div><div>Как вы объясняете заказчику, почему ваша цена выше, чем на маркетплейсе — и работает ли это?</div></div>
+    <div class="question-item"><div class="q-arrow">→</div><div>Что может сделать Содружество как сообщество, чего не может сделать одна компания в борьбе с демпингом?</div></div>
+    <div class="question-item"><div class="q-arrow">→</div><div>Какой знак качества или отраслевой стандарт был бы значимым для конечного заказчика?</div></div>
+    <div class="question-item"><div class="q-arrow">→</div><div>Что мешает агентствам отказываться от дешёвых поставщиков низкого качества, даже когда понимают риски?</div></div>
+    <div class="question-item"><div class="q-arrow">→</div><div>Как агентства могут влиять на выбор поставщика внутри своей компании — и делают ли это осознанно?</div></div>
+    <div class="question-item"><div class="q-arrow">→</div><div>Как рынок может совместно работать с заказчиками, чтобы те перестали воспринимать мерч как обычный расходник?</div></div>
+    <div class="question-item"><div class="q-arrow">→</div><div>Как агентство может выстроить позицию на рынке так, чтобы заказчик изначально не сравнивал его с дешёвыми конкурентами?</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ TOPIC 5 ═══════════════════════════════ -->
+<div class="page t5" id="page-t5">
+  <div class="topic-header">
+    <div class="topic-num">Тема 05 · Группа 5</div>
+    <div class="topic-title">Что мы ещё не пробовали — и почему именно сейчас стоит попробовать?</div>
+    <div class="topic-subtitle">Новые ниши, ИИ, коллаборации, нестандартные форматы — кризис как окно возможностей для тех, кто готов двигаться.</div>
+    <div class="hook-box">«Какую идею ты давно хотел попробовать, но не решался?»</div>
+  </div>
+
+  <div class="section-title">Данные опроса</div>
+  <div class="data-grid">
+    <div class="data-card">
+      <div class="data-card-label"><span class="dot-ra"></span> Агентства говорят</div>
+      <div class="stat-item">
+        <div class="stat-text">КЗ хочет уникальное — стандартный каталог устарел</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-ra" style="width:67%"></div></div><div class="stat-pct">67%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Интерес к ВИП-сегменту и известным брендам</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-ra" style="width:44%"></div></div><div class="stat-pct">44%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">ИИ — внедряют или планируют внедрить в процессы</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-ra" style="width:44%"></div></div><div class="stat-pct">44%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Интерес к новым нишам и рынкам (госструктуры, ИТ)</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-ra" style="width:33%"></div></div><div class="stat-pct">33%</div></div>
+      </div>
+    </div>
+    <div class="data-card">
+      <div class="data-card-label"><span class="dot-sup"></span> Поставщики говорят</div>
+      <div class="stat-item">
+        <div class="stat-text">Готовые наборы «под бриф» — большой нереализованный потенциал</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-sup" style="width:50%"></div></div><div class="stat-pct">50%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Кастомизация без больших тиражей — через сублимацию</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-sup" style="width:42%"></div></div><div class="stat-pct">42%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">ИИ и автоматизация — ускоряют работу, внедряют активно</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-sup" style="width:42%"></div></div><div class="stat-pct">42%</div></div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-text">Коллаборации и выход в новые ниши — в приоритете</div>
+        <div class="stat-bar-row"><div class="stat-bar-bg"><div class="stat-bar-fill fill-sup" style="width:33%"></div></div><div class="stat-pct">33%</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tension-box">
+    <b>Особенность этой группы</b>
+    Это самая «открытая» тема — меньше боли, больше возможностей. Группа работает в режиме стратегической фантазии: не «что болит», а «что можно сделать первыми». Идеальный состав — люди, которые мыслят на 1–2 года вперёд.
+  </div>
+
+  <div class="external-block">
+    <h3>Данные из открытых источников</h3>
+    <div class="ext-item">
+      <div class="ext-icon">🤖</div>
+      <div class="ext-text"><b>ИИ — рабочий инструмент, не инновация.</b> Нейросети перестали быть новинкой в B2B: используются для персонализации КП, автоматизации рутины, предиктивной аналитики. Внедрение CRM с ИИ даёт прирост продаж 40–60% (Битрикс24, 2025).</div>
+    </div>
+    <div class="ext-item">
+      <div class="ext-icon">🌱</div>
+      <div class="ext-text"><b>Эко-мерч и функциональность — главные тренды 2026:</b> клиенты выбирают многоразовые термокружки, шопперы, биоразлагаемую упаковку. Корпоративный мерч эволюционировал в полноценный маркетинговый инструмент и элемент корпоративной культуры.</div>
+    </div>
+    <div class="ext-item">
+      <div class="ext-icon">🏢</div>
+      <div class="ext-text"><b>AR и «умный» мерч:</b> крупные компании экспериментируют с мерчем, интегрированным со смартфонами, AR-технологиями и QR-кодами. Сбер создал отдельный департамент брендированной продукции — знак того, что рынок взрослеет.</div>
+    </div>
+    <div class="ext-item">
+      <div class="ext-icon">📈</div>
+      <div class="ext-text"><b>B2B-маркетплейсы растут на 15% в год</b> и активно заходят в нишу корпоративных закупок. Для рынка мерча это и угроза (новый конкурент), и возможность (новый канал сбыта для поставщиков с готовым к размещению ассортиментом).</div>
+    </div>
+  </div>
+
+  <div class="ai-block">
+    <h3>💡 Идеи для генерации — куда смотреть</h3>
+    <div class="ai-idea">
+      <div class="ai-bullet"></div>
+      <div class="ai-idea-text">
+        <h4>ИИ-конструктор КП</h4>
+        <p>Инструмент для агентства: вводишь бриф, ИИ подбирает релевантные позиции из каталогов нескольких поставщиков и собирает КП. Поставщики загружают свой ассортимент в единую базу Содружества.</p>
+      </div>
+    </div>
+    <div class="ai-idea">
+      <div class="ai-bullet"></div>
+      <div class="ai-idea-text">
+        <h4>Выход в B2C через мерч-коллаборации</h4>
+        <p>Несколько агентств объединяются для работы с B2C-брендами или создания собственных лимитированных коллекций. Поставщики обеспечивают производство и кастомизацию. Новый сегмент выручки.</p>
+      </div>
+    </div>
+    <div class="ai-idea">
+      <div class="ai-bullet"></div>
+      <div class="ai-idea-text">
+        <h4>Госсектор и новые ниши</h4>
+        <p>Госструктуры, ИТ-компании, отрасли с госфинансированием — меньше подвержены кризису. Как войти в эти ниши совместно? Какие продукты, какие каналы, кто уже там работает?</p>
+      </div>
+    </div>
+    <div class="ai-idea">
+      <div class="ai-bullet"></div>
+      <div class="ai-idea-text">
+        <h4>Маркетплейс Содружества</h4>
+        <p>Закрытая B2B-платформа: агентства размещают брифы, поставщики отвечают предложениями. Ускоряет подбор, снижает транзакционные издержки. Конкурент Яндекс Маркету B2B, но со своими — и с доверием.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="question-block">
+    <h3>Вопросы для обсуждения в группе</h3>
+    <div class="question-item"><div class="q-arrow">→</div><div>Какую новую нишу или тип клиента вы ещё не пробовали — и что останавливает?</div></div>
+    <div class="question-item"><div class="q-arrow">→</div><div>Какие процессы в вашей работе уже автоматизированы с помощью ИИ — и что можно автоматизировать следующим?</div></div>
+    <div class="question-item"><div class="q-arrow">→</div><div>Какой совместный продукт или сервис Содружество могло бы создать, который было бы невозможно сделать в одиночку?</div></div>
+    <div class="question-item"><div class="q-arrow">→</div><div>Если бы у вас был год и небольшой бюджет от сообщества — что бы вы запустили?</div></div>
+  </div>
+</div>
+
+<script>
+  function show(page, btn) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+
+</body>
+</html>
